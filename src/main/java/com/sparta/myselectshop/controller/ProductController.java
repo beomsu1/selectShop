@@ -7,6 +7,8 @@ import com.sparta.myselectshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -24,5 +26,11 @@ public class ProductController {
     public ProductResponseDto updateProduct(@PathVariable("id")Long id, @RequestBody ProductMypriceRequestDto requestDto){
 
         return productService.updateProduct(id, requestDto);
+    }
+
+    @GetMapping("/products")
+    public List<ProductResponseDto> getProduct(){
+
+        return productService.getProducts();
     }
 }
