@@ -1,6 +1,7 @@
 package com.sparta.myselectshop.controller;
 
 import com.sparta.myselectshop.dto.FolderRequestDto;
+import com.sparta.myselectshop.dto.FolderResponseDto;
 import com.sparta.myselectshop.security.UserDetailsImpl;
 import com.sparta.myselectshop.service.FolderService;
 import lombok.RequiredArgsConstructor;
@@ -24,4 +25,8 @@ public class FolderController {
         folderService.addFolders(folderNames, userDetails.getUser());
     }
 
+    @GetMapping("/folders")
+    public List<FolderResponseDto> getFolders(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        return folderService.getFolders(userDetails.getUser());
+    }
 }
