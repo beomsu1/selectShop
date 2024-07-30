@@ -1,41 +1,46 @@
 name: Github Actions, CloudType CI/CD
 
-on: 
+on:
   push:
     branches: [ master ]
   pull_request:
-    branches: 
+    branches:
       - master
 
 jobs:
   build:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
 
-    steps: 
-      - name: checkout
+    steps:
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: java setup
+      - name: Set up JDK
         uses: actions/setup-java@v2
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: make executable gradlew
+      - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: run unittest
+      - name: Set up MySQL
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          mysql_charset: 'utf8'
+          mysql_version: '8.0.33'
+          mysql_database: 'shop'
+          mysql_root_password: 'admin'
+
+      - name: Run unit tests
         run: ./gradlew clean test --exclude-task test
 
-      - name: Checkout
-        uses: actions/checkout@v3
-      
       - name: Connect deploy key
         uses: cloudtype-github-actions/connect@v1
         with:
           token: ${{ secrets.CLOUDTYPE_TOKEN }}
           ghtoken: ${{ secrets.GHP_TOKEN }}
-          
+
       - name: Deploy
         uses: cloudtype-github-actions/deploy@v1
         with:
