@@ -1,0 +1,54 @@
+name: Github Actions, CloudType CI/CD
+
+on: 
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: 
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest 
+
+    steps: 
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: java setup
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: make executable gradlew
+        run: chmod +x ./gradlew
+
+      - name: run unittest
+        run: ./gradlew clean test
+
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+          
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: beomsu_1221/selectshop
+          stage: main
+          yaml: |
+            name: selectshop
+            app: java@17
+            options:
+              ports: 8080
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
+              preset: java-springboot
