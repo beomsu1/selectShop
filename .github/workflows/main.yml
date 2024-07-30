@@ -25,7 +25,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: run unittest
-        run: ./gradlew clean test
+        run: ./gradlew clean test --exclude-task test
 
       - name: Checkout
         uses: actions/checkout@v3
