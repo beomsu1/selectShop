@@ -24,15 +24,6 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Set up MySQL
-        uses: mirromutth/mysql-action@v1.1
-        with:
-          mysql version: '8.0.33'
-          mysql root password: 'admin'
-          mysql database: 'shop'
-          mysql user: 'root'
-          mysql password: 'admin'
-
       - name: Run unit tests
         run: ./gradlew clean test --exclude-task test
 
