@@ -54,7 +54,7 @@ public class ProductController {
             @RequestParam("isAsc") boolean isAsc,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
-        return productService.getProductsInFolder(folderId, page, size, sortBy, isAsc, userDetails.getUser());
+        return productService.getProductsInFolder(folderId, page - 1, size, sortBy, isAsc, userDetails.getUser());
     }
 
 }

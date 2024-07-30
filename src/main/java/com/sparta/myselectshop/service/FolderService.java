@@ -19,7 +19,7 @@ public class FolderService {
     public void addFolders(List<String> folderNames, User user) {
 
         // 폴더 중복 조회
-        List<Folder> existFolderList = folderRepository.findAllUserAndNameIn(user, folderNames);
+        List<Folder> existFolderList = folderRepository.findAllByUserAndNameIn(user, folderNames);
 
         List<Folder> folderList = new ArrayList<>();
 
