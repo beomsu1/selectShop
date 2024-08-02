@@ -1,51 +1,51 @@
-name: Github Actions, CloudType CI/CD
-
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches:
-      - master
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Make Gradle wrapper executable
-        run: chmod +x ./gradlew
-
-      - name: Run unit tests
-        run: ./gradlew clean test --exclude-task test
-
-      - name: Connect deploy key
-        uses: cloudtype-github-actions/connect@v1
-        with:
-          token: ${{ secrets.CLOUDTYPE_TOKEN }}
-          ghtoken: ${{ secrets.GHP_TOKEN }}
-
-      - name: Deploy
-        uses: cloudtype-github-actions/deploy@v1
-        with:
-          token: ${{ secrets.CLOUDTYPE_TOKEN }}
-          project: beomsu_1221/selectshop
-          stage: main
-          yaml: |
-            name: selectshop
-            app: java@17
-            options:
-              ports: 8080
-            context:
-              git:
-                url: git@github.com:${{ github.repository }}.git
-                ref: ${{ github.ref }}
-              preset: java-springboot
+#name: Github Actions, CloudType CI/CD
+#
+#on:
+#  push:
+#    branches: [ master ]
+#  pull_request:
+#    branches:
+#      - master
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Set up JDK
+#        uses: actions/setup-java@v2
+#        with:
+#          java-version: '17'
+#          distribution: 'temurin'
+#
+#      - name: Make Gradle wrapper executable
+#        run: chmod +x ./gradlew
+#
+#      - name: Run unit tests
+#        run: ./gradlew clean test --exclude-task test
+#
+#      - name: Connect deploy key
+#        uses: cloudtype-github-actions/connect@v1
+#        with:
+#          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+#          ghtoken: ${{ secrets.GHP_TOKEN }}
+#
+#      - name: Deploy
+#        uses: cloudtype-github-actions/deploy@v1
+#        with:
+#          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+#          project: beomsu_1221/selectshop
+#          stage: main
+#          yaml: |
+#            name: selectshop
+#            app: java@17
+#            options:
+#              ports: 8080
+#            context:
+#              git:
+#                url: git@github.com:${{ github.repository }}.git
+#                ref: ${{ github.ref }}
+#              preset: java-springboot
