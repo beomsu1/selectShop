@@ -18,7 +18,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -50,7 +49,7 @@ public class ProductService {
         if (myPrice < MIN_MY_PRICE) {
 
             throw new IllegalArgumentException(
-                    messageSource.getMessage("below.min.my.price", new Integer[]{MIN_MY_PRICE}, "Wrong Price", Locale.getDefault())
+                    ("최저 희망가는 최소 100 원 이상으로 설정해 주세요.")
             );
         }
 

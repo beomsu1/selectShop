@@ -85,7 +85,7 @@ class ProductServiceTest {
 
         // then
         assertEquals(
-                "유효하지 않은 관심 가격입니다. 최소 " +ProductService.MIN_MY_PRICE + " 원 이상으로 설정해 주세요.",
+                "최저 희망가는 최소 " +ProductService.MIN_MY_PRICE + " 원 이상으로 설정해 주세요.",
                 exception.getMessage()
         );
     }
